@@ -6,7 +6,7 @@
 /*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 19:49:53 by amine             #+#    #+#             */
-/*   Updated: 2022/11/14 21:25:25 by amine            ###   ########.fr       */
+/*   Updated: 2022/11/15 00:21:46 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ class Server
 		void			initServer(const short &port, const std::string &pswrd);
 		void			addUser(std::vector<std::string> warray, int fd);
 		bool			isWordInArray(std::vector<std::string> warray, std::string word);
-		bool			checkRequestFormat(std::vector<std::string> warray);
+		bool			checkRequestFormatFull(std::vector<std::string> warray);
+		bool			checkRequestFormatIncomp(std::vector<std::string> warray);
 		bool			ifJoinServer(int fd);
 		void			sendReply(std::string reply, User &user);
 	

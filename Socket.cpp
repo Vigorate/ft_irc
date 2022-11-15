@@ -6,7 +6,7 @@
 /*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 20:53:10 by amine             #+#    #+#             */
-/*   Updated: 2022/11/14 21:27:25 by amine            ###   ########.fr       */
+/*   Updated: 2022/11/15 01:19:47 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,14 @@ void						Socket::initSock(short const &port, std::string const &pswrd)
 	_setSock(port);
 }
 
+#include <errno.h>
+
 void						Socket::_setSock(short const &port)
 {
 	int	optval = 1; // for setsocketoption
 
-	if ((this->_sfd = socket(AF_INET, SOCK_STREAM, 0) < 0))
+	if ((this->_sfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
 		printexit("socket failed", 1);
-	
 	this->_addrin.sin_family = AF_INET;
 	this->_addrin.sin_addr.s_addr = INADDR_ANY;
 	this->_addrin.sin_port = htons(port);
@@ -60,7 +61,6 @@ void						Socket::_setSock(short const &port)
 		close(getSfd());
 		printexit("setsockopt failed", 1);
 	}
-
 	if (fcntl(getSfd(), F_SETFL, O_NONBLOCK) < 0)
 	{
 		close(getSfd());
@@ -70,5 +70,4 @@ void						Socket::_setSock(short const &port)
 		printexit("bind failed", 1);
 	if (listen(getSfd(), 1) < 0)
 		printexit("listen failed", 1);
-
 }

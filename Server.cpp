@@ -6,7 +6,7 @@
 /*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 20:52:57 by amine             #+#    #+#             */
-/*   Updated: 2022/11/14 21:42:09 by amine            ###   ########.fr       */
+/*   Updated: 2022/11/15 15:37:53 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,29 @@ bool			Server::isWordInArray(std::vector<std::string> warray, std::string word)
 
 int				Server::_fdMax()
 {
+	std::vector<int>::iterator it = _fdtab.begin();
+	std::vector<int>::iterator ite = _fdtab.end();
 	int		i = _socket.getSfd();
 
 	if (_fdtab.empty())
 		return i;
-	for (size_t j = 0; j > _fdtab.size(); ++j)
-		if (_fdtab[j] > i)
-			i = _fdtab[j];
+	for (; it != ite; ++it)
+		if (*it > i)
+			i = *it;
 	return i;
 }
 
-bool			Server::checkRequestFormat(std::vector<std::string> warray)
+bool			Server::checkRequestFormatFull(std::vector<std::string> warray)
+{
+	if (this->isWordInArray(warray, "CAP")
+		&& this->isWordInArray(warray, "NICK")
+		&& this->isWordInArray(warray, "USER")
+		&& this->isWordInArray(warray, "PASS"))
+		return true;
+	return false;
+}
+
+bool			Server::checkRequestFormatIncomp(std::vector<std::string> warray)
 {
 	if (this->isWordInArray(warray, "CAP")
 		|| this->isWordInArray(warray, "NICK")
@@ -63,6 +75,7 @@ bool			Server::checkRequestFormat(std::vector<std::string> warray)
 		return true;
 	return false;
 }
+
 
 bool			Server::_checkPassword(std::vector<std::string> warray)
 {
@@ -167,29 +180,10 @@ void			Server::addUser(std::vector<std::string> warray, int fd)
 	}
 }
 
-void			Server::_connectClient()
-{
-	int					c_fd;
-	struct sockaddr_in 	c_addr;
-	socklen_t			len = sizeof(c_addr);
-
-	if ((c_fd = accept(_socket.getSfd(), (struct sockaddr *)&c_addr, &len)) < 0)
-		printexit("accept failed", 1);
-	if (fcntl(c_fd, F_SETFL, O_NONBLOCK) < 0)
-		printexit("fcntl failed", 1);
-	
-	User	*user = new User(c_fd);
-	
-	user->setNickname("");
-	user->setHostname(std::string(inet_ntoa(c_addr.sin_addr)));
-	_users.push_back(user);
-	_fdtab.push_back(c_fd);
-	FD_SET(c_fd, &_set);
-}
-
 void			Server::_manageRequest(int const fd)
 {
 	bzero(_buff, BUFF_SIZE);
+	std::cout << "Hereasdasd" << std::endl;
 	if (recv(fd, _buff, BUFF_SIZE, 0) <= 0)
 	{
 		_disconnectClient(fd);
@@ -202,16 +196,41 @@ void			Server::_manageRequest(int const fd)
 	bool						cmd = true;
 	bool						full = false;
 
+	for (std::vector<std::string>::iterator itee = warray.begin(); itee != warray.end(); ++itee)
+		std::cout << "Line : " << *itee << std::endl;
 
-	if (checkRequestFormat(warray) && _checkPassword(warray) && !ifJoinServer(fd))
+	if (checkRequestFormatFull(warray) && _checkPassword(warray) && !ifJoinServer(fd)) // Full user connect
 	{
 		addUser(warray, fd);
 		cmd = false;
 		full = true;
-		// Add partial user inscription
 	}
-	(void)full;
-	(void)cmd;
+	// Incomplete user connect
+	if (cmd && ifJoinServer(fd))
+	{
+//		Invoker		inv;
+		
+	}
+}
+
+void			Server::_connectClient()
+{
+	int					c_fd;
+	struct sockaddr_in 	c_addr;
+	socklen_t			len = sizeof(c_addr);
+
+	if ((c_fd = accept(_socket.getSfd(), (struct sockaddr *)&c_addr, &len)) < 0)
+		printexit("accept failed", 1);
+	if (fcntl(c_fd, F_SETFL, O_NONBLOCK) < 0)
+		printexit("fcntl failed", 1);
+
+	User	*user = new User(c_fd);
+	
+	user->setNickname("");
+	user->setHostname(std::string(inet_ntoa(c_addr.sin_addr)));
+	_users.push_back(user);
+	_fdtab.push_back(c_fd);
+	FD_SET(c_fd, &_set);
 }
 
 void			Server::initServer(const short &port, const std::string &pswrd)
@@ -219,6 +238,7 @@ void			Server::initServer(const short &port, const std::string &pswrd)
 	int		rval;
 
  	_socket.initSock(port, pswrd);
+	FD_ZERO(&_set);
 	FD_SET(_socket.getSfd(), &_set);
 	
 	while (1) // Add switch later
@@ -242,6 +262,5 @@ void			Server::initServer(const short &port, const std::string &pswrd)
 				}
 			}
 		}
-		
 	}
 }

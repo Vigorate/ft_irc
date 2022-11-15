@@ -2,7 +2,7 @@ NAME = ircserv
 
 CC	= clang++
 
-CFLAGES = -Wall -Wextra -std=c++98 #-fsanitize=address -g3
+CFLAGES = -Wall -Wextra -std=c++98 -fsanitize=address -g3
 
 
 IFLAGES =  -I./inc -I./inc/cmd

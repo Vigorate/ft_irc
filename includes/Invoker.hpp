@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Invoker.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/30 17:41:48 by amine             #+#    #+#             */
-/*   Updated: 2022/11/14 23:53:19 by amine            ###   ########.fr       */
+/*   Created: 2022/11/15 00:28:02 by amine             #+#    #+#             */
+/*   Updated: 2022/11/15 00:35:23 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/lib.hpp"
-#include "includes/Server.hpp"
-#include "includes/Socket.hpp"
+#ifndef INVOKER_HPP
+# define INVOKER_HPP
 
-int		main(int ac, char **av)
+#include "lib.hpp"
+#include "Server.hpp"
+#include "Command.hpp"
+
+class Invoker
 {
-	Server	serv;
+	public:
+	//	Constructor
+		Invoker();
+	//	Destructor
+		virtual	~Invoker();
+		std::string		parser(std::vector<std::string> buffer, User *user, Server &server);
+		
+	private:
+		std::vector<Command *>		_cmds;
+};
 
-	if (ac != 3)
-		printexit("Argument must be port and password\n", 1);
-	for (int i = 0; av[1][i]; ++i)
-		if (!isdigit(av[1][i]))
-			printexit("Port must be only numerical\n", 1);
-	serv.initServer(atoi(av[1]), av[2]);
-}
+#endif
