@@ -6,7 +6,7 @@
 /*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 17:37:03 by amine             #+#    #+#             */
-/*   Updated: 2022/11/18 17:41:18 by amine            ###   ########.fr       */
+/*   Updated: 2022/11/18 19:24:09 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ std::vector<User *>			Server::getChannelUsers(std::string chan_name)
 	return users;
 }
 
-//				CHECKS
+//							CHECKS
 
 bool						Server::ifJoinServer(int fd)
 {
@@ -127,7 +127,6 @@ bool						Server::checkRequestFormatIncomp(std::vector<std::string> warray)
 	return false;
 }
 
-
 bool						Server::_checkPassword(std::vector<std::string> warray)
 {
 //	size_t pos = 0;
@@ -158,3 +157,17 @@ bool						Server::isWordInArray(std::vector<std::string> warray, std::string wor
 	return false;
 }
 
+//							USERS
+
+User						*Server::getUserByName(std::string name)
+{
+	if (_users.size() == 0)
+		return NULL;
+	std::vector<User *>::iterator it = _users.begin();
+	std::vector<User *>::iterator ite = _users.end();
+
+	for (; it != ite; ++it)
+		if ((*it)->getNickname() == name)
+			return *it;
+	return NULL;
+}

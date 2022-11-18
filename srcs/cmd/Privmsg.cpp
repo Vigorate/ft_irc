@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Pvmsg.cpp                                          :+:      :+:    :+:   */
+/*   Privmsg.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 18:11:46 by amine             #+#    #+#             */
-/*   Updated: 2022/11/18 17:28:32 by amine            ###   ########.fr       */
+/*   Updated: 2022/11/18 20:23:25 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ Pvmsg::~Pvmsg() {}
 
 std::string						Pvmsg::execute(std::string str, User *user, Server &server)
 {
-	std::vector<std::string>	cmd = str_to_warray(str, " ");
-	std::string					chan = cmd[1];
-	std::vector<User *>			users = server.getChannelUsers(chan);
-	std::vector<User *>::iterator it = users.begin();
-	std::vector<User *>::iterator ite = users.end();
-	std::string					reply;
+	std::vector<std::string>		cmd = str_to_warray(str, " ");
+	std::string						chan = cmd[1];
+	std::vector<User *>				users = server.getChannelUsers(chan);
+	std::vector<User *>::iterator	it = users.begin();
+	std::vector<User *>::iterator	ite = users.end();
+	std::string						reply;
 
 	reply = ":" + user->getNickname() + "!" + user->getUsername() + "@" + user->getHostname() + " " + str + "\r\n";
 	for (; it != ite; ++it)

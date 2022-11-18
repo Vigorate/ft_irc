@@ -6,7 +6,7 @@
 /*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 18:02:34 by amine             #+#    #+#             */
-/*   Updated: 2022/11/18 17:20:39 by amine            ###   ########.fr       */
+/*   Updated: 2022/11/18 19:59:15 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ std::string			Join::execute(std::string cmd, User *user, Server &server)
 
 	std::vector<Channel *>		channels = server.getChannels();
 
-	if (!server.getChannel(cname))
+	if (server.getChannel(cname) == NULL)
 		server.addChannel(cname);
 	channels = server.getChannels();
 	
@@ -48,16 +48,18 @@ std::string			Join::execute(std::string cmd, User *user, Server &server)
 			if (!(*it)->getUser(user->getNickname()))
 				(*it)->addUser(user);
 			users = (*it)->getUsers();
-			for (std::vector<User *>::iterator uit = users.begin(); uit != (users.end() - 1); ++it)
+			for (std::vector<User *>::iterator uit = users.begin(); uit < users.end(); ++uit)
 			{
 				names += (*uit)->getNickname();
+				if (uit == users.end() - 1)
+					break;
 				names += " ";
 			}
 		}
 	reply = ":" + user->getNickname() + "!" + user->getUsername() + "@" + user->getHostname() + " " + cmd + "\r\n";
 	std::string reply2 = ":" + user->getNickname() + "!" + user->getUsername()+ "@" +user->getHostname() + " 353 " + user->getNickname() +" = "+ cname + " : @" + names + "\r\n";
 	std::string reply3 = ":" + user->getNickname() + "!" + user->getUsername()+ "@" +user->getHostname() + " 366 " + user->getNickname() +" "+ cname + " :End of /NAMES list"+"\r\n";
-	for (std::vector<User *>::iterator uit = users.begin(); uit != (users.end() - 1); ++it)
+	for (std::vector<User *>::iterator uit = users.begin(); uit != users.end(); ++uit)
 	{
 		if ((*uit)->getFd() != user->getFd())
 			server.sendReply(reply, *(*uit));

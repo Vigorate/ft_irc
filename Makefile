@@ -2,7 +2,7 @@ NAME = ircserv
 
 CC	= clang++
 
-CFLAGES = -Wall -Wextra -std=c++98 -fsanitize=address -g3
+CFLAGES = -Wall -Wextra -std=c++98 #-fsanitize=address -g3
 
 
 IFLAGES =  -I./inc -I./inc/cmd
@@ -19,7 +19,7 @@ SRCS := ./main.cpp \
 		./srcs/cmd/Kick.cpp \
 		./srcs/cmd/Nick.cpp \
 		./srcs/cmd/Mode.cpp \
-		./srcs/cmd/Pvmsg.cpp \
+		./srcs/cmd/Privmsg.cpp \
 		./srcs/cmd/Quit.cpp \
 		./srcs/cmd/Ping.cpp \
 		./srcs/cmd/Part.cpp \

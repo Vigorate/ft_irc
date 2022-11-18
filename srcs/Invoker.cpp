@@ -6,7 +6,7 @@
 /*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 00:38:11 by amine             #+#    #+#             */
-/*   Updated: 2022/11/15 18:01:41 by amine            ###   ########.fr       */
+/*   Updated: 2022/11/18 19:29:01 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,13 @@ Invoker::~Invoker()
 		delete *it;
 }
 
-std::string			Invoker::parser(std::vector<std::string> warray, User *user, Server &server)
+std::string Invoker::parser(std::vector<std::string> warray, User *user, Server &server)
 {
-	std::vector<std::string>::iterator	it = warray.begin();
-	std::vector<std::string>::iterator	ite = warray.end();
-	std::vector<std::string>			cmd;
-	std::string							reply;
+	std::vector<std::string>::iterator it = warray.begin();
+	std::vector<std::string>::iterator ite = warray.end();
+	std::vector<std::string> cmd;
+	std::string reply;
+
 	for (; it != ite; ++it)
 	{
 		cmd = str_to_warray(*it, " ");
@@ -60,7 +61,6 @@ std::string			Invoker::parser(std::vector<std::string> warray, User *user, Serve
 		{
 			if (cmd[0] == (*i)->getCmdName())
 			{
-				std::cout << "\n		EXECUTE : " << (*i)->getCmdName() << std::endl;
 				reply = ((*i)->execute(*it, user, server));
 				return reply;
 			}

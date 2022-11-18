@@ -6,7 +6,7 @@
 /*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 19:49:53 by amine             #+#    #+#             */
-/*   Updated: 2022/11/18 17:39:03 by amine            ###   ########.fr       */
+/*   Updated: 2022/11/18 19:18:41 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ class Server
 		Channel						*getChannel(std::string chan_name);
 		std::vector<User *>			getChannelUsers(std::string chan_name);	
 		std::vector<Channel *>		getChannels();
+		User						*getUserByName(std::string);
 	
 	//	Checks
 		bool						isWordInArray(std::vector<std::string> warray, std::string word);
