@@ -6,11 +6,11 @@
 /*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 21:31:23 by amine             #+#    #+#             */
-/*   Updated: 2022/11/14 21:32:39 by amine            ###   ########.fr       */
+/*   Updated: 2022/11/15 17:18:19 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/lib.hpp"
+#include "../includes/lib.hpp"
 
 std::vector<std::string>	str_to_warray(std::string str, std::string sep)
 {

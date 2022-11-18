@@ -6,7 +6,7 @@
 /*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 17:55:32 by amine             #+#    #+#             */
-/*   Updated: 2022/11/14 21:34:35 by amine            ###   ########.fr       */
+/*   Updated: 2022/11/17 21:17:06 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,32 +27,40 @@ class User
 		~User();
 
 	//	GS
-	void				setFd(int);
-	void				setNickname(std::string);
-	void				setUsername(std::string);
-	void				setHostname(std::string);
-	void				setPartial(bool);
-	void				setJoin(bool);
+	void						setFd(int);
+	void						setNickname(std::string);
+	void						setUsername(std::string);
+	void						setHostname(std::string);
+	void						setPass(std::string);
+	void						setPartial(bool);
+	void						setJoin(bool);
 	
-	int const			&getFd();
-	std::string const	&getNickname();
-	std::string const	&getUsername();
-	std::string const	&getHostname();
-	bool				getJoin(); // To change
-	bool				getPartial();
-	std::string			getPrefix();
+	int const					&getFd();
+	std::string const			&getNickname();
+	std::string const			&getUsername();
+	std::string const			&getHostname();
+	std::string const			&getPass();
+	bool						getJoin();
+	bool						getPartial();
+	std::string					getPrefix();
+	std::vector<std::string>	getBanChans();
 
 	//	Members
+	void						findName(std::vector<std::string>);
+	bool						checkBan(std::string chan);
+	void						addBanChans(std::string name);
+	void						rmvBanChans(std::string name);
 
 	protected:
 	//	Variables
-		int				_fd;
-		std::string		_nick;
-		std::string		_nuser;
-		std::string		_nhost;
-		std::string		_pswrd;
-		bool			_join; // To change
-		bool			_partial; // To change
+		int							_fd;
+		std::string					_nick;
+		std::string					_nuser;
+		std::string					_nhost;
+		std::string					_pass;
+		bool						_join;
+		bool						_partial;
+		std::vector<std::string>	_banChannels;
 };
 
 #endif

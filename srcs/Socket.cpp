@@ -6,11 +6,11 @@
 /*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 20:53:10 by amine             #+#    #+#             */
-/*   Updated: 2022/11/15 01:19:47 by amine            ###   ########.fr       */
+/*   Updated: 2022/11/15 21:33:57 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/Socket.hpp"
+#include "../includes/Socket.hpp"
 
 Socket::Socket(): _sfd(0), _port(htons(PORT)), _pswrd()
 { memset(&this->_addrin, 0, sizeof(struct sockaddr)); }
@@ -53,7 +53,7 @@ void						Socket::_setSock(short const &port)
 	if ((this->_sfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
 		printexit("socket failed", 1);
 	this->_addrin.sin_family = AF_INET;
-	this->_addrin.sin_addr.s_addr = INADDR_ANY;
+	this->_addrin.sin_addr.s_addr = htonl(INADDR_ANY);
 	this->_addrin.sin_port = htons(port);
 
 	if (setsockopt(getSfd(), SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(int)) < 0)
@@ -68,6 +68,6 @@ void						Socket::_setSock(short const &port)
 	}
 	if (bind(getSfd(), (struct sockaddr *)&this->_addrin, sizeof(struct sockaddr)) < 0)
 		printexit("bind failed", 1);
-	if (listen(getSfd(), 1) < 0)
+	if (listen(getSfd(), SOMAXCONN) < 0)
 		printexit("listen failed", 1);
 }

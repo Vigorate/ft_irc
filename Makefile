@@ -8,10 +8,25 @@ CFLAGES = -Wall -Wextra -std=c++98 -fsanitize=address -g3
 IFLAGES =  -I./inc -I./inc/cmd
 
 SRCS := ./main.cpp \
-		./Socket.cpp \
-		./Utils.cpp \
-		./Server.cpp \
-		./User.cpp \
+		./srcs/Socket.cpp \
+		./srcs/Utils.cpp \
+		./srcs/Server.cpp \
+		./srcs/User.cpp \
+		./srcs/Invoker.cpp \
+		./srcs/Channel.cpp \
+		./srcs/cmd/Join.cpp \
+		./srcs/cmd/Invite.cpp \
+		./srcs/cmd/Kick.cpp \
+		./srcs/cmd/Nick.cpp \
+		./srcs/cmd/Mode.cpp \
+		./srcs/cmd/Pvmsg.cpp \
+		./srcs/cmd/Quit.cpp \
+		./srcs/cmd/Ping.cpp \
+		./srcs/cmd/Part.cpp \
+		./srcs/cmd/Notice.cpp \
+		./srcs/Server_utils.cpp
+
+
 
 OBJS := $(SRCS:%.cpp=%.o)
 
@@ -23,7 +38,7 @@ $(NAME): $(OBJS)
 all: $(NAME)
 
 clean:
-		@rm -rf $(OBJS)
+		@rm -rf $(OBJS) 
 		@echo "Delete"
 
 fclean:clean

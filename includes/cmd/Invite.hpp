@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Invoker.hpp                                        :+:      :+:    :+:   */
+/*   Invite.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/15 00:28:02 by amine             #+#    #+#             */
-/*   Updated: 2022/11/15 17:49:35 by amine            ###   ########.fr       */
+/*   Created: 2022/11/15 17:21:18 by amine             #+#    #+#             */
+/*   Updated: 2022/11/15 17:38:16 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INVOKER_HPP
-# define INVOKER_HPP
+#ifndef INVITE_HPP
+# define INVITE_HPP
 
-#include "lib.hpp"
-#include "Server.hpp"
-#include "Command.hpp"
+#include "../lib.hpp"
+#include "../Command.hpp"
 
-class Invoker
+class Invite : public Command
 {
 	public:
-		Invoker();
-		virtual	~Invoker();
-		std::string		parser(std::vector<std::string> buffer, User *user, Server &server);
-		
-	private:
-		std::vector<Command *>		_cmds;
+		Invite();
+		virtual ~Invite();
+
+		std::string execute(std::string str, User *user, Server &server);
+
 };
 
 #endif
