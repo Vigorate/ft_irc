@@ -6,7 +6,7 @@
 /*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 18:09:58 by amine             #+#    #+#             */
-/*   Updated: 2022/11/18 20:45:00 by amine            ###   ########.fr       */
+/*   Updated: 2022/11/19 15:57:38 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ bool							Mode::checkAdmin(std::string uname, std::string cname, Server &server
 {
 	Channel						*chan = getChannel(cname, server);
 	std::vector<User *>			users = chan->getUsers();
+
 	if ((users.front())->getNickname() == uname)
 		return true;
 	return false;
@@ -48,7 +49,7 @@ std::string						Mode::execute(std::string str, User *user, Server &server)
 	std::vector<User *>			users;
 	
 
-	if (cmd.size() == 4 && cmd[2] == "-b")
+	if (cmd.size() == 4)
 	{
 		channel = cmd[1];
 		banned = cmd[3];
