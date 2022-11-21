@@ -6,7 +6,7 @@
 /*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 19:49:53 by amine             #+#    #+#             */
-/*   Updated: 2022/11/18 19:18:41 by amine            ###   ########.fr       */
+/*   Updated: 2022/11/21 19:10:14 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ class Server
 		bool						checkRequestFormatIncomp(std::vector<std::string> warray);
 		bool						ifJoinServer(int fd);
 		bool						isIncomplete(int fd);
+		bool						checkUser(std::string);
 	
 	//	Members
 		void						initServer(const short &port, const std::string &pswrd);

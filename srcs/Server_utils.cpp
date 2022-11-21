@@ -6,7 +6,7 @@
 /*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 17:37:03 by amine             #+#    #+#             */
-/*   Updated: 2022/11/18 19:24:09 by amine            ###   ########.fr       */
+/*   Updated: 2022/11/21 19:11:40 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,17 @@ std::vector<User *>			Server::getChannelUsers(std::string chan_name)
 }
 
 //							CHECKS
+
+bool						Server::checkUser(std::string nick)
+{
+	std::vector<User *>::iterator it = _users.begin();
+	std::vector<User *>::iterator ite = _users.end();
+
+	for (; it != ite; ++it)
+		if ((*it)->getNickname() == nick)
+			return true;
+	return false;
+}
 
 bool						Server::ifJoinServer(int fd)
 {

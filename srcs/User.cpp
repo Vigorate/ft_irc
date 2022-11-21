@@ -6,7 +6,7 @@
 /*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 18:02:48 by amine             #+#    #+#             */
-/*   Updated: 2022/11/17 21:23:51 by amine            ###   ########.fr       */
+/*   Updated: 2022/11/21 16:34:39 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ bool						User::checkBan(std::string name)
 {
 	std::vector<std::string>::iterator it = _banChannels.begin();
 	std::vector<std::string>::iterator ite = _banChannels.end();
-	
+
 	for (; it != ite; ++it)
 		if (*it == name)
 			return true;

@@ -6,7 +6,7 @@
 /*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 18:09:58 by amine             #+#    #+#             */
-/*   Updated: 2022/11/19 15:57:38 by amine            ###   ########.fr       */
+/*   Updated: 2022/11/21 18:59:44 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ std::string						Mode::execute(std::string str, User *user, Server &server)
 		banned = cmd[3];
 		line = str_to_warray(banned, "@");
 		banned = line[0] + "@" + user->getHostname();
-
+		if (!getChannel(channel, server))
+			return (reply = "Channel does not exist\r\n");
 		if (checkAdmin(user->getNickname(), channel, server) == false)
 		{
 			reply += user->getPrefix() + ERR_CHANOPRIVSNEEDED(channel) + "\r\n";
@@ -65,7 +66,7 @@ std::string						Mode::execute(std::string str, User *user, Server &server)
 		User *uban = server.getUserByName(cmd[3]);
 		if (cmd[2] == "-b")
 		{
-			if (uban && checkAdmin(user->getNickname(), channel, server) == false)
+			if (uban && checkAdmin(user->getNickname(), channel, server) == true)
 			{
 				uban->rmvBanChans(channel);
 				server.sendReply(reply, *uban);

@@ -6,7 +6,7 @@
 /*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 17:22:25 by amine             #+#    #+#             */
-/*   Updated: 2022/11/15 17:59:07 by amine            ###   ########.fr       */
+/*   Updated: 2022/11/21 19:23:55 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ class Kick : public Command
 		Kick();
 		virtual ~Kick();
 
-		std::string execute(std::string str, User *user, Server &server);
+		bool				checkChannel(std::string cname, Server &server);
+		bool				checkUserInChannel(std::string name, std::string chan, Server &server);
+
+		std::string			execute(std::string str, User *user, Server &server);
 
 };
 

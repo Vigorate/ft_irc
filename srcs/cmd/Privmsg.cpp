@@ -6,7 +6,7 @@
 /*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 18:11:46 by amine             #+#    #+#             */
-/*   Updated: 2022/11/19 15:42:32 by amine            ###   ########.fr       */
+/*   Updated: 2022/11/21 16:28:38 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ std::string						Pvmsg::execute(std::string str, User *user, Server &server)
 	std::string						reply;
 
 	if (user->checkBan(chan) == true)
-		return reply;
+		return (reply + "User " + user->getNickname() + " is banned from " + chan + "\r\n");
 	reply = ":" + user->getNickname() + "!" + user->getUsername() + "@" + user->getHostname() + " " + str + "\r\n";
 	for (; it != ite; ++it)
 		if ((*it)->getFd() != user->getFd())

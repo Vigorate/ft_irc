@@ -6,7 +6,7 @@
 /*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 09:10:18 by amine             #+#    #+#             */
-/*   Updated: 2022/11/16 10:25:42 by amine            ###   ########.fr       */
+/*   Updated: 2022/11/21 17:31:07 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,17 @@ bool					Channel::checkName(std::string name)
 		if (name[i] == ' ' || name[i] == '\a' || name[i] == ',')
 			return false;
 	return true;
+}
+
+void					Channel::rmvUser(User *user)
+{
+	std::vector<User *>::iterator it = _users.begin();
+	std::vector<User *>::iterator ite = _users.end();
+
+	for (; it != ite; ++it)
+		if ((*it)->getFd() == user->getFd())
+		{
+			_users.erase(it);
+			return;
+		}
 }

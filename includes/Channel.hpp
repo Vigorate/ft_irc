@@ -6,7 +6,7 @@
 /*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 09:06:58 by amine             #+#    #+#             */
-/*   Updated: 2022/11/16 10:24:32 by amine            ###   ########.fr       */
+/*   Updated: 2022/11/21 17:29:00 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ class Channel
 		bool					checkName(std::string);
 		bool					checkUser(User *);
 		bool					checkUser(std::string);
+
+		void					rmvUser(User *);
 
 	private:
 		std::string			_name;
