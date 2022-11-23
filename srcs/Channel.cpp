@@ -6,7 +6,7 @@
 /*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 09:10:18 by amine             #+#    #+#             */
-/*   Updated: 2022/11/21 17:31:07 by amine            ###   ########.fr       */
+/*   Updated: 2022/11/23 20:21:01 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 Channel::Channel() {}
 
 Channel::Channel(std::string chan) : _name(chan), _admin(NULL) {}
+
+Channel::~Channel() {}
 
 Channel::Channel(std::string chan, User *adm) : _name(chan), _admin(adm) {}
 

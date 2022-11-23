@@ -30,9 +30,7 @@ SRCS := ./main.cpp \
 OBJS := $(SRCS:%.cpp=%.o)
 
 $(NAME): $(OBJS)
-		@echo "compiler>>>>>>>>" 
 		@$(CC) $(CFLAGES) $(OBJS) -o $@ 
-		@echo "IRC done!"		
 
 all: $(NAME)
 

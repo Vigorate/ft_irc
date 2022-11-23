@@ -6,7 +6,7 @@
 /*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 20:52:57 by amine             #+#    #+#             */
-/*   Updated: 2022/11/18 17:41:42 by amine            ###   ########.fr       */
+/*   Updated: 2022/11/23 20:20:15 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,27 @@ Server::Server(): _socket()
 
 Server::Server(Server const &src) { *this = src; }
 
-Server::~Server() {}
+Server::~Server()
+{
+	for (std::vector<User *>::iterator it = _users.begin(); it != _users.end(); ++it)
+		delete(*it);
+	_users.clear();
+	for (std::vector<Channel *>::iterator it2 = _channels.begin(); it2 != _channels.end(); ++it2)
+		delete(*it2);
+	_channels.clear();
+
+}
 
 Server	&Server::operator=(Server const &rhs)
 {
 	if (this == &rhs)
 		return (*this);
 	this->_socket = rhs._socket;
+	this->_channels = rhs._channels;
+	this->_fdtab = rhs._fdtab;
+	this->_rset = rhs._rset;
+	this->_set = rhs._set;
+	this->_fdtab = rhs._fdtab;
 	return (*this);
 }
 
@@ -227,7 +241,7 @@ void					Server::initServer(const short &port, const std::string &pswrd)
 	FD_ZERO(&_set);
 	FD_SET(_socket.getSfd(), &_set);
 	
-	while (1) // Add switch later
+	while (running == true) // Add switch later
 	{
 		_rset = _set;
 		if ((rval = select(_fdMax() + 1, &_rset, NULL, NULL, NULL)) < 0)

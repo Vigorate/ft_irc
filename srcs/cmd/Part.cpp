@@ -6,7 +6,7 @@
 /*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 18:10:58 by amine             #+#    #+#             */
-/*   Updated: 2022/11/22 14:44:35 by amine            ###   ########.fr       */
+/*   Updated: 2022/11/23 19:15:17 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,19 @@ std::string						Part::execute(std::string str, User *user, Server &server)
 	chan = cmd[1];
 	reply = user->getPrefix() + " " + str + " " + ":" + user->getNickname();
 	if (server.checkChannel(chan) == false)
-		return (reply + " Channel :" + chan + " does not exist\r\n");
-	reply += "\r\n";
+	{
+		reply = user->getPrefix() + ERR_NOSUCHCHANNEL(chan) + "\r\n";
+		server.sendReply(reply, *user);
+		return reply;
+	}
 	users = server.getChannelUsers(chan);
+	if (users.size() == 0)
+	{
+		reply = user->getPrefix() + ERR_NOTONCHANNEL(chan) + "\r\n";
+		server.sendReply(reply, *user);
+		return reply;
+	}
+	reply += "\r\n";
 	for (std::vector<User *>::iterator it = users.begin(); it != users.end(); ++it)
 		if (send((*it)->getFd(), reply.c_str(), reply.length(), 0) < 0)
 		{
