@@ -6,7 +6,7 @@
 /*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 17:21:18 by amine             #+#    #+#             */
-/*   Updated: 2022/11/15 17:38:16 by amine            ###   ########.fr       */
+/*   Updated: 2022/11/23 15:20:22 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,12 @@ class Invite : public Command
 		Invite();
 		virtual ~Invite();
 
-		std::string execute(std::string str, User *user, Server &server);
+		std::string		execute(std::string str, User *user, Server &server);
+
+	private:
+		bool			checkNick(std::string nick, Server &server);
+		bool			checkUserChannel(Channel *chan, std::string name);
+		int				getFdName(std::string nick, Server &server);
 
 };
 

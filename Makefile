@@ -17,7 +17,6 @@ SRCS := ./main.cpp \
 		./srcs/cmd/Join.cpp \
 		./srcs/cmd/Invite.cpp \
 		./srcs/cmd/Kick.cpp \
-		./srcs/cmd/Nick.cpp \
 		./srcs/cmd/Mode.cpp \
 		./srcs/cmd/Privmsg.cpp \
 		./srcs/cmd/Quit.cpp \

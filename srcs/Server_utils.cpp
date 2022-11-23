@@ -6,7 +6,7 @@
 /*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 17:37:03 by amine             #+#    #+#             */
-/*   Updated: 2022/11/21 19:11:40 by amine            ###   ########.fr       */
+/*   Updated: 2022/11/22 14:41:16 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int							Server::_fdMax()
 //							CHANNELS
 
 std::vector<Channel *>		Server::getChannels() { return _channels; }
+
+std::vector<User *>			Server::getUsers() { return _users; }
 
 void						Server::addChannel(std::string chan_name) { _channels.push_back(new Channel(chan_name)); }
 
@@ -164,6 +166,22 @@ bool						Server::isWordInArray(std::vector<std::string> warray, std::string wor
 	{
 		if ((*it).find(word) != std::string::npos) 
 				return true;
+	}
+	return false;
+}
+
+bool								Server::checkChannel(std::string cname)
+{
+	std::vector<Channel *>				_channels = getChannels();
+	std::vector<Channel *>::iterator	it = _channels.begin();
+	std::vector<Channel *>::iterator	ite = _channels.end();
+
+	for (; it != ite; ++it)
+	{
+		std::cout << (*it)->getName() << std::endl;
+
+		if ((*it)->getName() == cname)
+			return true;
 	}
 	return false;
 }

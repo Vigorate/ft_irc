@@ -6,7 +6,7 @@
 /*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 18:02:34 by amine             #+#    #+#             */
-/*   Updated: 2022/11/21 21:34:34 by amine            ###   ########.fr       */
+/*   Updated: 2022/11/23 18:56:59 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,28 @@ Join::~Join() {}
 std::string			Join::execute(std::string cmd, User *user, Server &server)
 {
 	std::vector<std::string>	cmd_tab = str_to_warray(cmd, " ");
-	std::string					cname = cmd_tab[1];
+	std::string					chan = cmd_tab[1];
 	std::string					reply;
 	
 	if (!cmd_tab[1].size())
 		return (reply + "\r\n");
-	if (user->checkBan(cname) == true)
+	if (user->checkBan(chan) == true)
 	{
-		reply = user->getPrefix() + ERR_BANNEDFROMCHAN(cname, user->getNickname()) + "\r\n";
+		reply = user->getPrefix() + ERR_BANNEDFROMCHAN(chan, user->getNickname()) + "\r\n";
+		server.sendReply(reply, *user);
+		return reply;
+	}
+	if (chan[0] != '#')
+	{
+		reply = user->getPrefix() + " Invalid channel name\r\n";
 		server.sendReply(reply, *user);
 		return reply;
 	}
 
 	std::vector<Channel *>		channels = server.getChannels();
 
-	if (server.getChannel(cname) == NULL)
-		server.addChannel(cname);
+	if (server.getChannel(chan) == NULL)
+		server.addChannel(chan);
 	channels = server.getChannels();
 	
 	std::string							names;
@@ -43,7 +49,7 @@ std::string			Join::execute(std::string cmd, User *user, Server &server)
 	std::vector<Channel *>::iterator	ite = channels.end();
 
 	for (; it != ite; ++it)
-		if ((*it)->getName() == cname)
+		if ((*it)->getName() == chan)
 		{
 			if (!(*it)->getUser(user->getNickname()))
 				(*it)->addUser(user);
@@ -57,8 +63,8 @@ std::string			Join::execute(std::string cmd, User *user, Server &server)
 			}
 		}
 	reply = ":" + user->getNickname() + "!" + user->getUsername() + "@" + user->getHostname() + " " + cmd + "\r\n";
-	std::string reply2 = ":" + user->getNickname() + "!" + user->getUsername()+ "@" +user->getHostname() + " 353 " + user->getNickname() +" = "+ cname + " : @" + names + "\r\n";
-	std::string reply3 = ":" + user->getNickname() + "!" + user->getUsername()+ "@" +user->getHostname() + " 366 " + user->getNickname() +" "+ cname + " :End of /NAMES list"+"\r\n";
+	std::string reply2 = ":" + user->getNickname() + "!" + user->getUsername()+ "@" +user->getHostname() + " 353 " + user->getNickname() +" = "+ chan + " : @" + names + "\r\n";
+	std::string reply3 = ":" + user->getNickname() + "!" + user->getUsername()+ "@" +user->getHostname() + " 366 " + user->getNickname() +" "+ chan + " :End of /NAMES list"+"\r\n";
 	for (std::vector<User *>::iterator uit = users.begin(); uit != users.end(); ++uit)
 	{
 		if ((*uit)->getFd() != user->getFd())

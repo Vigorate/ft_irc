@@ -6,7 +6,7 @@
 /*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 18:10:58 by amine             #+#    #+#             */
-/*   Updated: 2022/11/21 18:12:27 by amine            ###   ########.fr       */
+/*   Updated: 2022/11/22 14:44:35 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,18 @@ std::string						Part::execute(std::string str, User *user, Server &server)
 	std::string					reply;
 	std::string					chan;
 
-	if (cmd.size() < 2)
-		return reply + "PART: Must indicate channel to part from\r\n";
 	chan = cmd[1];
-	reply = user->getPrefix() + " " + str + " " + ":" + user->getNickname() + "\r\n";
+	reply = user->getPrefix() + " " + str + " " + ":" + user->getNickname();
+	if (server.checkChannel(chan) == false)
+		return (reply + " Channel :" + chan + " does not exist\r\n");
+	reply += "\r\n";
 	users = server.getChannelUsers(chan);
 	for (std::vector<User *>::iterator it = users.begin(); it != users.end(); ++it)
 		if (send((*it)->getFd(), reply.c_str(), reply.length(), 0) < 0)
 		{
 			std::cout << "[Send response failed]" << std::endl;
 			server.disconnectClient((*it)->getFd());
-			return NULL;
+			return reply;
 		}
 	server.getChannel(chan)->rmvUser(user);
 	return reply;

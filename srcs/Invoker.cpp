@@ -6,7 +6,7 @@
 /*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 00:38:11 by amine             #+#    #+#             */
-/*   Updated: 2022/11/18 19:29:01 by amine            ###   ########.fr       */
+/*   Updated: 2022/11/22 13:32:46 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 #include "../includes/cmd/Invite.hpp"
 #include "../includes/cmd/Kick.hpp"
 #include "../includes/cmd/Mode.hpp"
-#include "../includes/cmd/Nick.hpp"
 #include "../includes/cmd/Notice.hpp"
 #include "../includes/cmd/Part.hpp"
 #include "../includes/cmd/Pvmsg.hpp"
@@ -27,7 +26,6 @@
 Invoker::Invoker()
 {
 	_cmds.push_back(new Ping());
-	_cmds.push_back(new Nick());
 	_cmds.push_back(new Part());
 	_cmds.push_back(new Join());
 	_cmds.push_back(new Notice());

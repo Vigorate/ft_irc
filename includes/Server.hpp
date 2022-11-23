@@ -6,7 +6,7 @@
 /*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 19:49:53 by amine             #+#    #+#             */
-/*   Updated: 2022/11/21 19:10:14 by amine            ###   ########.fr       */
+/*   Updated: 2022/11/22 14:01:49 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ class Server
 
 	//	GS
 		Channel						*getChannel(std::string chan_name);
+		std::vector<User *>			getUsers();
 		std::vector<User *>			getChannelUsers(std::string chan_name);	
 		std::vector<Channel *>		getChannels();
 		User						*getUserByName(std::string);
@@ -40,6 +41,7 @@ class Server
 		bool						ifJoinServer(int fd);
 		bool						isIncomplete(int fd);
 		bool						checkUser(std::string);
+		bool						checkChannel(std::string);
 	
 	//	Members
 		void						initServer(const short &port, const std::string &pswrd);
