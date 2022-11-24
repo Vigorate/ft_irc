@@ -6,7 +6,7 @@
 /*   By: amine <amine@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 18:09:58 by amine             #+#    #+#             */
-/*   Updated: 2022/11/21 21:48:49 by amine            ###   ########.fr       */
+/*   Updated: 2022/11/23 23:17:25 by amine            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ std::string						Mode::execute(std::string str, User *user, Server &server)
 			}
 		}
 		if (cmd[2] == "+b")
-		{ // Add wildcard ban
+		{
 			if (uban && uban->checkBan(channel) == true)
 			{
 				reply += user->getPrefix() + " 697 " + user->getNickname() + " " + channel + " " + banned + " b  :";
